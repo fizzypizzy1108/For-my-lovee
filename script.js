@@ -1,50 +1,102 @@
-const screens=[...document.querySelectorAll(".screen")];
-let current=0;
-let wishIndex=0;
-const wishes=[
-"May you always have the courage to chase the life you want.",
-"May your hard work turn into the success you deserve.",
-"May you always have people around you who genuinely love you.",
-"May you find peace on the days when life feels heavy.",
-"May you keep becoming the man you dream of being.",
-"And may one day, all the beautiful things we talk about become our reality."
-];
-
-function show(n){
-  screens[current].classList.remove("active");
-  current=n;
-  screens[current].classList.add("active");
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-function next(){show(current+1)}
-function wish(){
-  const box=document.getElementById("wishBox");
-  if(wishIndex<wishes.length){
-    box.textContent=wishes[wishIndex];
-    wishIndex++;
+let currentScreen = 0;
+let wishesRevealed = 0;
+const totalScreens = 12;
+function showScreen(number) {
+  const current = document.querySelector(".screen.active");
+  const nextScreen = document.getElementById(`s${number}`);
+  if (!nextScreen) return;
+  if (current) {
+    current.classList.remove("active");
   }
-  if(wishIndex===wishes.length){
-    setTimeout(()=>document.querySelector("#s3 button").textContent="Continue →",300);
-    document.querySelector("#s3 button").onclick=next;
+  currentScreen = number;
+  setTimeout(() => {
+    nextScreen.classList.add("active");
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }, 150);
+}
+function next() {
+  if (currentScreen < totalScreens - 1) {
+    showScreen(currentScreen + 1);
   }
 }
-function finale(){
-  const burst=document.createElement("div");
-  burst.textContent="♡";
-  burst.style.cssText="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font:10rem 'Cormorant Garamond';color:#fff;opacity:0;pointer-events:none;animation:fadeHeart 1.6s ease forwards;z-index:20";
-  document.body.appendChild(burst);
-  const st=document.createElement("style");
-  st.textContent="@keyframes fadeHeart{0%{opacity:0;transform:scale(.5)}35%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.35)}}";
-  document.head.appendChild(st);
-  setTimeout(()=>{burst.remove();show(6)},1200);
-}
-function toggleMusic(){
-  const audio=document.getElementById("audio");
-  const btn=document.getElementById("musicBtn");
-  const text=document.getElementById("musicText");
-  if(audio.paused){
-    audio.play().then(()=>{btn.textContent="Ⅱ";text.textContent="Pause our song"}).catch(()=>{text.textContent="Add those-eyes.mp3 first"});
-  }else{
-    audio.pause();btn.textContent="♫";text.textContent="Play our song";
+const audio = document.getElementById("audio");
+const musicBtn = document.getElementById("musicBtn");
+const musicText = document.getElementById("musicText");
+function toggleMusic() {
+  if (!audio) return;
+  if (audio.paused) {
+    audio.play()
+      .then(() => {
+        musicBtn.textContent = "Ⅱ";
+        musicText.textContent = "Playing our song ♡";
+      })
+      .catch(() => {
+        musicText.textContent = "Tap again to play ♫";
+      });
+  } else {
+    audio.pause();
+    musicBtn.textContent = "♫";
+    musicText.textContent = "Play our song";
   }
 }
+function finale() {
+  const hearts = document.querySelector(".floating-hearts");
+  if (hearts) {
+    hearts.classList.add("celebrate");
+  }
+  showScreen(11);
+  createHearts();
+}
+function createHearts() {
+  const container = document.querySelector(".floating-hearts");
+  if (!container) return;
+  for (let i = 0; i < 18; i++) {
+    const heart = document.createElement("span");
+    heart.textContent = Math.random() > 0.5 ? "♡" : "✦";
+    heart.style.position = "fixed";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.bottom = "-30px";
+    heart.style.fontSize = (14 + Math.random() * 22) + "px";
+    heart.style.opacity = "0";
+    heart.style.color = "#c96f86";
+    heart.style.pointerEvents = "none";
+    const duration = 4 + Math.random() * 4;
+    const delay = Math.random() * 1.5;
+    heart.animate(
+      [
+        {
+          transform: "translateY(0) scale(0.7) rotate(0deg)",
+          opacity: 0
+        },
+        {
+          transform: "translateY(-35vh) scale(1) rotate(15deg)",
+          opacity: 0.8
+        },
+        {
+          transform: "translateY(-110vh) scale(1.2) rotate(-15deg)",
+          opacity: 0
+        }
+      ],
+      {
+        duration: duration * 1000,
+        delay: delay * 1000,
+        easing: "ease-out",
+        fill: "forwards"
+      }
+    );
+    container.appendChild(heart);
+    setTimeout(() => {
+      heart.remove();
+    }, (duration + delay + 1) * 1000);
+  }
+}
+/* Start the page at screen 0 */
+document.addEventListener("DOMContentLoaded", () => {
+  const firstScreen = document.getElementById("s0");
+  if (firstScreen) {
+    firstScreen.classList.add("active");
+  }
+});
