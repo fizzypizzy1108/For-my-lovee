@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap');
+
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#09080b;color:#f7f2ed}
+body{font-family:Montserrat,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 35%,#291b24 0,#100d12 38%,#09080b 75%);z-index:-3}
+.stars,.stars:before,.stars:after{position:fixed;inset:0;content:"";pointer-events:none}
+.stars{background-image:radial-gradient(#fff8 1px,transparent 1px);background-size:90px 90px;opacity:.18;z-index:-2}
+.stars:before{background-image:radial-gradient(#fff 1px,transparent 1px);background-size:137px 137px;opacity:.13}
+.stars:after{background:radial-gradient(ellipse at center,transparent 20%,#09080b 100%)}
+main{width:100%;min-height:100vh}
+.screen{display:none;min-height:100vh;width:100%;max-width:760px;margin:auto;padding:18vh 28px 12vh;align-items:center;flex-direction:column;justify-content:center;text-align:center;animation:fade .8s ease}
+.screen.active{display:flex}
+@keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+.tiny,.chapter{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:#bca8b2;margin-bottom:22px}
+h1,h2{font-family:"Cormorant Garamond",serif;font-weight:500;line-height:.95;margin:0 0 25px}
+h1{font-size:clamp(4rem,16vw,8rem)}
+h2{font-size:clamp(3rem,11vw,5.5rem)}
+p{font-size:1rem;line-height:1.9;color:#d5cdd0;max-width:590px;margin:13px auto}
+.lead{font-size:1.05rem}
+.highlight{font-family:"Cormorant Garamond",serif;font-size:1.7rem;color:#f7e9ed;line-height:1.35;margin:30px auto}
+button{margin-top:30px;padding:14px 24px;border:1px solid #75616a;background:#ffffff08;color:#fff;border-radius:999px;font:500 .72rem Montserrat,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:.25s}
+button:hover{background:#fff;color:#111;transform:translateY(-2px)}
+.wishbox{min-height:170px;max-width:600px;width:100%;border:1px solid #4c3b44;background:#ffffff06;border-radius:22px;padding:35px 28px;display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:2rem;line-height:1.25;margin-top:20px}
+.letter{text-align:left;border-left:1px solid #4c3b44;padding-left:24px;margin:10px 0}
+.letter p{margin:0 0 18px}
+.signature{text-align:center!important;font-family:"Cormorant Garamond",serif;font-size:1.5rem!important;margin-top:28px!important}
+.heart{font-family:"Cormorant Garamond",serif;font-size:8rem;line-height:1;margin-bottom:10px}
+.small{font-size:.8rem;letter-spacing:.25em;text-transform:uppercase}
+.music{position:fixed;right:18px;bottom:18px;display:flex;align-items:center;gap:9px;z-index:5;color:#c8bdc2;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase}
+.music button{margin:0;width:42px;height:42px;padding:0;font-size:1rem}
+@media(max-width:600px){.screen{padding:12vh 22px}.letter{padding-left:18px}p{font-size:.94rem}.wishbox{font-size:1.65rem}}
